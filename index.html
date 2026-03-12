@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulla Alliances - Coming Soon</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin-bottom: 2em;
+            font-style: italic;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            font-size: 2em;
+        }
+
+        .countdown div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 15px;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+
+        .countdown div span {
+            display: block;
+            font-size: 0.6em;
+            margin-top: 5px;
+            color: #ffd700;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9em;
+            color: #aaaaaa;
+        }
+		
+		 #comingSoon {
+    position: absolute;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 1.5s ease;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+}
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <h1>Mulla Alliances</h1> 
+<div id="comingSoon">🚀 Coming Soon 🚀</div>
+    <div class="countdown">
+        <div><span id="days">0</span>Days</div>
+        <div><span id="hours">0</span>Hours</div>
+        <div><span id="minutes">0</span>Minutes</div>
+        <div><span id="seconds">0</span>Seconds</div>
+    </div>
+
+    <footer>Launching on 1st April 2026</footer>
+
+    <script>
+        const countdown = () => {
+            const launchDate = new Date("April 1, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = launchDate - now;
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const days = Math.floor(gap / day);
+            const hours = Math.floor((gap % day) / hour);
+            const minutes = Math.floor((gap % hour) / minute);
+            const seconds = Math.floor((gap % minute) / second);
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            if (gap <= 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown").innerHTML = "<h2>We Are Live!</h2>";
+            }
+        };
+
+        const timer = setInterval(countdown, 1000);
+        countdown();
+    </script>
+	<script>
+function randomFirework(power = 0.2) {
+    confetti({
+        particleCount: 80 * power,
+        spread: 70,
+        origin: {
+            x: Math.random(),
+            y: Math.random() * 0.6
+        }
+    });
+}
+
+function launchCelebration() {
+    const duration = 1500;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 70,
+            origin: { x: 0 }
+        });
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 100,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
+}
+
+setInterval(() => {
+    const now = new Date();
+    const month = now.getMonth(); 
+    const date = now.getDate();
+
+    // March 31 or April 1 = CRAZY fireworks
+    if ((month === 2 && date === 31) || (month === 3 && date === 1)) {
+        launchCelebration();
+    } else {
+        randomFirework(0.3); // small sparkles before launch
+    }
+
+}, 5000);
+</script>
+<script>
+const text = document.getElementById("comingSoon");
+
+function randomMove() {
+
+    const maxX = window.innerWidth - 200;
+    const maxY = window.innerHeight - 100;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    const colors = [
+        "#ff4d4d",
+        "#00ffff",
+        "#ffd700",
+        "#00ff7f",
+        "#ff00ff",
+        "#ffffff"
+    ];
+
+    const randomColor = colors[Math.floor(Math.random()*colors.length)];
+
+    const sizes = ["1.5em","2em","2.5em","3em"];
+    const randomSize = sizes[Math.floor(Math.random()*sizes.length)];
+
+    text.style.left = randomX + "px";
+    text.style.top = randomY + "px";
+    text.style.color = randomColor;
+    text.style.fontSize = randomSize;
+}
+
+setInterval(randomMove, 2000);
+</script>
+</body>
+</html>
